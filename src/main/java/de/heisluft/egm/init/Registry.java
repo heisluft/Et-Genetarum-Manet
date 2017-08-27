@@ -1,41 +1,46 @@
 package de.heisluft.egm.init;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import de.heisluft.egm.items.ItemHammer;
+import de.heisluft.egm.util.ClosableHashSet;
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent.Register;
-import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class Registry {
+public final class Registry {
+	
+	public static final ClosableHashSet<Block> BLOCKS_TO_REGISTER = new ClosableHashSet<>();
+	public static final ClosableHashSet<SoundEvent> SOUNDS_TO_REGISTER = new ClosableHashSet<>();
+	public static final ClosableHashSet<Item> ITEMS_TO_REGISTER = new ClosableHashSet<>();
+	public static final ClosableHashSet<IRecipe> RECIPES_TO_REGISTER = new ClosableHashSet<>();
 
-	private static final Logger eventlog = LogManager.getLogger("Et Generatum Manet] [Events");
+	@SubscribeEvent
+	public void registerBlocks(Register<Block> event) {
+		for (final Block b : BLOCKS_TO_REGISTER.close())
+			event.getRegistry().register(b);
+		BLOCKS_TO_REGISTER.disposeElementsAndReopen();
+	}
 	
 	@SubscribeEvent
 	public void registerItems(Register<Item> event) {
-		eventlog.info(Items.WOODEN_CROOK.getUnlocalizedName());
-		event.getRegistry().registerAll(Items.WOODEN_CROOK, Items.DIAMOND_HAMMER, Items.GOLDEN_HAMMER,
-				Items.IRON_HAMMER, Items.STONE_HAMMER, Items.WOODEN_HAMMER, Items.BONE_CROOK);
+		Items.init();
+		for (final Item i : ITEMS_TO_REGISTER)
+			event.getRegistry().register(i);
+		ITEMS_TO_REGISTER.disposeElementsAndReopen();
+		OreDict.init();
 	}
-
+	
 	@SubscribeEvent
-	public void s(HarvestDropsEvent event) {
-		if (event.getHarvester() != null
-				&& event.getHarvester().getHeldItemMainhand().getItem() instanceof ItemHammer) {
-			final Block b = event.getState().getBlock();
-			if (b == Blocks.COBBLESTONE) {
-				event.getDrops().clear();
-				event.getDrops().add(new ItemStack(Blocks.GRAVEL));
-			} else if (b == Blocks.GRAVEL) {
-				event.getDrops().clear();
-				event.getDrops().add(new ItemStack(Blocks.SAND));
-			} else if (b == Blocks.SAND)
-				event.getDrops().clear();
-		}
+	public void registerRecipies(Register<IRecipe> event) {
+		for (final IRecipe r : RECIPES_TO_REGISTER.close())
+			event.getRegistry().register(r);
+		ITEMS_TO_REGISTER.disposeElementsAndReopen();
+	}
+	
+	public void registerSounds(Register<SoundEvent> event) {
+		for (final SoundEvent e : SOUNDS_TO_REGISTER.close())
+			event.getRegistry().register(e);
+		SOUNDS_TO_REGISTER.disposeElementsAndReopen();
 	}
 }
