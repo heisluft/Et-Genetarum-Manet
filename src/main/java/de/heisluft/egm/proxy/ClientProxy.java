@@ -9,7 +9,6 @@ public final class ClientProxy extends CommonProxy {
 	@Override
 	public void init(FMLInitializationEvent event) {
 		super.init(event);
-		Items.registerTextures();
 	}
 
 	@Override
@@ -20,5 +19,6 @@ public final class ClientProxy extends CommonProxy {
 	@Override
 	public void preInit(FMLPreInitializationEvent event) {
 		super.preInit(event);
+		Items.registerTextures();
 	}
 }

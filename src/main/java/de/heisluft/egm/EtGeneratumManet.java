@@ -19,31 +19,31 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = Constants.MOD_ID, version = Constants.VERSION, name = Constants.MOD_NAME, modLanguage = "java", useMetadata = true)
 public class EtGeneratumManet {
-	
-	public static final Logger MAIN_LOG = LogManager.getLogger("MOD] [Et Generatum Manet");
 
+	public static final Logger MAIN_LOG = LogManager.getLogger("Et Generatum Manet");
+	
 	@SidedProxy(modId = Constants.MOD_ID, clientSide = Constants.CLIENT_PROXY, serverSide = Constants.COMMON_PROXY)
 	public static CommonProxy proxy;
-	
+
 	@Instance
 	public static EtGeneratumManet instance;
-
+	
 	@EventHandler
 	public void init(FMLInitializationEvent event) {
 		proxy.init(event);
 	}
-	
+
 	@EventHandler
 	public void onFingerprintViolation(FMLFingerprintViolationEvent event) {}
-	
+
 	@EventHandler
 	public void onIMC(IMCEvent event) {}
-	
+
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
 	}
-	
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(new Registry());
