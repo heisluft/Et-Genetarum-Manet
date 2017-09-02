@@ -2,28 +2,33 @@ package de.heisluft.egm.items;
 
 import de.heisluft.egm.EtGeneratumManet;
 import de.heisluft.egm.util.ClosableHashSet;
+import de.heisluft.egm.util.CrookUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 
 public class ItemCrook extends ItemTool {
 	public static enum Variant {
 		WOOD("wooden_crook", ToolMaterial.WOOD), BONE("bone_crook", ToolMaterial.IRON);
-		
+
 		private final String name;
 		private final ToolMaterial material;
-		
+
 		private Variant(String name, ToolMaterial material) {
 			this.material = material;
 			this.name = name;
 		}
-		
+
 		public ToolMaterial getMaterial() {
 			return material;
 		}
-		
+
 		public String getName() {
 			return name;
 		}
@@ -45,5 +50,21 @@ public class ItemCrook extends ItemTool {
 		super(var.getMaterial(), effectiveBlocks);
 		setUnlocalizedName(var.getName());
 		setRegistryName(var.getName());
+	}
+
+	@Override
+	public boolean canHarvestBlock(IBlockState block, ItemStack is) {
+		return block.getBlock() instanceof BlockLeaves;
+	}
+	
+	@Override
+	public float getStrVsBlock(ItemStack stack, IBlockState state) {
+		return state.getBlock() instanceof BlockLeaves ? efficiencyOnProperMaterial + 0.5f : 0.1f;
+	}
+
+	@Override
+	public boolean onBlockStartBreak(ItemStack item, BlockPos pos, EntityPlayer player) {
+		CrookUtils.doCrooking(item, pos, player);
+		return false;
 	}
 }

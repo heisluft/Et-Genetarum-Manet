@@ -27,9 +27,7 @@ public final class OreDict {
 		OreDictionary.registerOre(name, stack);
 	}
 	
-	static void init() {
-
-	}
+	static void init() {}
 	
 	private OreDict() {}
 }

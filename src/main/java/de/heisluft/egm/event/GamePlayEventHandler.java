@@ -1,9 +1,7 @@
 package de.heisluft.egm.event;
 
-import de.heisluft.egm.items.ItemCrook;
 import de.heisluft.egm.items.ItemHammer;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,7 +14,7 @@ public class GamePlayEventHandler {
 		if (event.getHarvester() != null && event.getHarvester().getHeldItemMainhand() != null) {
 			final Item i = event.getHarvester().getHeldItemMainhand().getItem();
 			final Block b = event.getState().getBlock();
-			if (i instanceof ItemHammer) {
+			if (i instanceof ItemHammer)
 				if (b == Blocks.COBBLESTONE) {
 					event.getDrops().clear();
 					event.getDrops().add(new ItemStack(Blocks.GRAVEL));
@@ -25,8 +23,6 @@ public class GamePlayEventHandler {
 					event.getDrops().add(new ItemStack(Blocks.SAND));
 				} else if (b == Blocks.SAND)
 					event.getDrops().clear();
-			} else if (i instanceof ItemCrook && b instanceof BlockLeaves)
-				;
 		}
 	}
 }

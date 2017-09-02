@@ -27,6 +27,15 @@ public class ClosableHashSet<E> extends HashSet<E> {
 		return isClosed ? false : super.addAll(c);
 	}
 	
+	public boolean addAll(E... elements) {
+		if (isClosed)
+			return false;
+		boolean error = false;
+		for (final E e : elements)
+			error = add(e);
+		return !error;
+	}
+	
 	@Override
 	public void clear() {
 		if (!isClosed)
