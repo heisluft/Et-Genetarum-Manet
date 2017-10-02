@@ -11,10 +11,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 
 public class ItemHammer extends ItemTool {
-
+	
 	private static final Set<Block> effectiveBlocks = ImmutableSet.<Block>of(Blocks.SAND, Blocks.COBBLESTONE,
 			Blocks.GRAVEL);
-
+	
 	public ItemHammer(ToolMaterial material) {
 		super(material, effectiveBlocks);
 		final String name = getToolMaterialName().toLowerCase()
@@ -22,15 +22,16 @@ public class ItemHammer extends ItemTool {
 		setUnlocalizedName(name);
 		setRegistryName(name);
 	}
-
+	
 	@Override
 	public boolean canHarvestBlock(IBlockState state, ItemStack stack) {
 		return effectiveBlocks.contains(state.getBlock()) ? true : super.canHarvestBlock(state, stack);
 	}
-
-	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState state) {
-		return effectiveBlocks.contains(state.getBlock()) ? efficiencyOnProperMaterial : 1.0f;
-	}
-
+	
+	// @Override
+	// public float getStrVsBlock(ItemStack stack, IBlockState state) {
+	// return effectiveBlocks.contains(state.getBlock()) ?
+	// efficiencyOnProperMaterial : 1.0f;
+	// }
+	
 }

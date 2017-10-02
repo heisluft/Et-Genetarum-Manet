@@ -14,54 +14,54 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 
 public class ItemCrook extends ItemTool {
+	
 	public static enum Variant {
 		WOOD("wooden_crook", ToolMaterial.WOOD), BONE("bone_crook", ToolMaterial.IRON);
-
+		
 		private final String name;
 		private final ToolMaterial material;
-
+		
 		private Variant(String name, ToolMaterial material) {
 			this.material = material;
 			this.name = name;
 		}
-
+		
 		public ToolMaterial getMaterial() {
 			return material;
 		}
-
+		
 		public String getName() {
 			return name;
 		}
 	}
-	
+
 	private static final ClosableHashSet<Block> effectiveBlocks = ClosableHashSet
 			.<Block>of(new Block[] { Blocks.LEAVES, Blocks.LEAVES2 }).close();
-	
+
 	public static void updateMinableBlocks() {
 		effectiveBlocks.disposeElementsAndReopen();
 		for (final ResourceLocation l : Block.REGISTRY.getKeys())
-			if (Block.REGISTRY.getObject(l) instanceof BlockLeaves)
-				effectiveBlocks.add(Block.REGISTRY.getObject(l));
+			if (Block.REGISTRY.getObject(l) instanceof BlockLeaves) effectiveBlocks.add(Block.REGISTRY.getObject(l));
 		effectiveBlocks.close();
 		EtGeneratumManet.MAIN_LOG.info("Loading Compatibility for " + effectiveBlocks.size() + " types of Leaves!");
 	}
-	
+
 	public ItemCrook(Variant var) {
 		super(var.getMaterial(), effectiveBlocks);
 		setUnlocalizedName(var.getName());
 		setRegistryName(var.getName());
 	}
-
+	
 	@Override
 	public boolean canHarvestBlock(IBlockState block, ItemStack is) {
 		return block.getBlock() instanceof BlockLeaves;
 	}
 	
-	@Override
-	public float getStrVsBlock(ItemStack stack, IBlockState state) {
-		return state.getBlock() instanceof BlockLeaves ? efficiencyOnProperMaterial + 0.5f : 0.1f;
-	}
-
+	// @Override
+	// public float getStrVsBlock(ItemStack stack, IBlockState state) {
+	// return state.getBlock() instanceof BlockLeaves ? efficiency + 0.5f : 0.1f;
+	// }
+	
 	@Override
 	public boolean onBlockStartBreak(ItemStack item, BlockPos pos, EntityPlayer player) {
 		CrookUtils.doCrooking(item, pos, player);
