@@ -113,7 +113,7 @@ task("uploadFiles", dependsOn: "build") {
 		apply plugin: 'maven'
 		uploadArchives { 
 			repositories.mavenDeployer { 
-				repository(url: "${local_maven}") { 
+				repository(url: "file://${local_maven}") { 
 					authentication(userName: maven_user, password: maven_password)
 				}
 				pom.version = version
