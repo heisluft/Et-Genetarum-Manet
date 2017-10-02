@@ -7,3 +7,4 @@
 *.launch
 .project
 .classpath
+/gradle.properties
