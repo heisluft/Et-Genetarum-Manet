@@ -24,10 +24,8 @@ public class Items {
 
 	private static void addAndRegisterRender(Item item) {
 		Registry.ITEMS_TO_REGISTER.add(item);
-		if (item instanceof ICanHasSpecial)
-			((ICanHasSpecial) item).doSpecialStuff();
-		else
-			EtGeneratumManet.proxy.addRenderRegister(new ItemStack(item), item.getRegistryName(), "inventory");
+		if (item instanceof ICanHasSpecial) ((ICanHasSpecial) item).doSpecialStuff();
+		else EtGeneratumManet.proxy.addRenderRegister(new ItemStack(item), item.getRegistryName(), "inventory");
 	}
 	
 	public static void init() {
