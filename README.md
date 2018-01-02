@@ -1,4 +1,4 @@
-# Et-Genetarum-Manet
+# Et Genetarum Manet
 
 A 1.12.1 Recode of Ex-Nihilo for me to learn modding by simply doing it.
 
