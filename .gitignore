@@ -1,20 +1,18 @@
 #gradle
-/.gradle/
-/build/
-gradle.properties
-
+/.gradle
+/build
 
 #eclipse
-/.settings/
-/bin/
+/.settings
+/bin
 *.launch
-.project
-.classpath
-
+/.project
+/.classpath
 
 #idea
-/.idea/
-/out/
+/.idea
+/classes
+/out
 *.iml
 
 #project
