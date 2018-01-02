@@ -8,24 +8,15 @@ buildscript {
     }
 }
 
-plugins { 
-	id "se.bjurr.gitchangelog.git-changelog-gradle-plugin" version "1.32"
-	id "com.matthewprenger.cursegradle" version "1.0.9"
-}
-
+apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-
-version = version_major + '.' + version_minor + '.' + version_patch
+version = '0.0.1'
 group = "de.heisluft"
-archivesBaseName = "egm"+ mcversion
+archivesBaseName = name + mcversion
 
-if(System.getenv().BUILD_NUMBER != null) { 
-	version += "-build_${System.getenv().BUILD_NUMBER}"
-}
-
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 minecraft {
     version = mcversion + "-" + forgeversion
@@ -34,12 +25,12 @@ minecraft {
     mappings = mcp_mappings
 }
 
-repositories { 
-
+repositories {
+	mavenCentral()
 }
 
 dependencies {
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
+    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev' adds buildcraft to the dev env
     //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
     //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
@@ -65,12 +56,6 @@ processResources {
     }
     
     rename '(.+_at.cfg)', 'META-INF/$1'
-}
-
-allprojects {
-	tasks.withType(Javadoc) { 
-		options.addStringOption('Xdoclint:none', '-quiet')
-	}
 }
 
 jar {
@@ -105,21 +90,4 @@ artifacts {
 	sourcesJar
 	javadocJar
 	apiJar
-}
-
-task("uploadFiles", dependsOn: "build") { 
-	description = "upload JARs"
-	if(project.hasProperty("local_maven")) { 
-		apply plugin: 'maven'
-		uploadArchives { 
-			repositories.mavenDeployer { 
-				repository(url: "file://${local_maven}") { 
-					authentication(userName: maven_user, password: maven_password)
-				}
-				pom.version = version
-				pom.artifactId = archivesBaseName
-				pom.groupId = group
-			}
-		}
-	}
 }
