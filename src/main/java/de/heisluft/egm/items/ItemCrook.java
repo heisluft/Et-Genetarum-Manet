@@ -15,13 +15,13 @@ import net.minecraft.util.math.BlockPos;
 
 public class ItemCrook extends ItemTool {
 	
-	public static enum Variant {
+	public enum Variant {
 		WOOD("wooden_crook", ToolMaterial.WOOD), BONE("bone_crook", ToolMaterial.IRON);
 		
 		private final String name;
 		private final ToolMaterial material;
 		
-		private Variant(String name, ToolMaterial material) {
+		Variant(String name, ToolMaterial material) {
 			this.material = material;
 			this.name = name;
 		}
@@ -35,19 +35,19 @@ public class ItemCrook extends ItemTool {
 		}
 	}
 
-	private static final ClosableHashSet<Block> effectiveBlocks = ClosableHashSet
-			.<Block>of(new Block[] { Blocks.LEAVES, Blocks.LEAVES2 }).close();
+	private static final ClosableHashSet<Block> EFFECTIVE_BLOCKS = ClosableHashSet
+			.of(new Block[] { Blocks.LEAVES, Blocks.LEAVES2 }).close();
 
 	public static void updateMinableBlocks() {
-		effectiveBlocks.disposeElementsAndReopen();
+		EFFECTIVE_BLOCKS.disposeElementsAndReopen();
 		for (final ResourceLocation l : Block.REGISTRY.getKeys())
-			if (Block.REGISTRY.getObject(l) instanceof BlockLeaves) effectiveBlocks.add(Block.REGISTRY.getObject(l));
-		effectiveBlocks.close();
-		EtGeneratumManet.MAIN_LOG.info("Loading Compatibility for " + effectiveBlocks.size() + " types of Leaves!");
+			if (Block.REGISTRY.getObject(l) instanceof BlockLeaves) EFFECTIVE_BLOCKS.add(Block.REGISTRY.getObject(l));
+		EFFECTIVE_BLOCKS.close();
+		EtGeneratumManet.MAIN_LOG.info("Loading Compatibility for " + EFFECTIVE_BLOCKS.size() + " types of Leaves!");
 	}
 
 	public ItemCrook(Variant var) {
-		super(var.getMaterial(), effectiveBlocks);
+		super(var.getMaterial(), EFFECTIVE_BLOCKS);
 		setUnlocalizedName(var.getName());
 		setRegistryName(var.getName());
 	}

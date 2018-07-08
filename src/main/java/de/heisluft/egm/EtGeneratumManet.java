@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid = Constants.MOD_ID, version = Constants.VERSION, name = Constants.MOD_NAME, modLanguage = "java", useMetadata = true)
+@Mod(modid = Constants.MOD_ID, version = Constants.VERSION, name = Constants.MOD_NAME, useMetadata = true)
 public class EtGeneratumManet {
 	
 	public static final Logger MAIN_LOG = LogManager.getLogger("Et Generatum Manet");

@@ -21,8 +21,8 @@ targetCompatibility = 1.8
 minecraft {
     version = mcversion + "-" + forgeversion
     runDir = "run"
-    replace '@VERSION@', project.version
-    mappings = mcp_mappings
+    replace '@VERSION@', version
+    mappings = mcpMappings
 }
 
 repositories {

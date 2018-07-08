@@ -1,5 +1,6 @@
 package de.heisluft.egm.util;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.function.Predicate;
@@ -10,8 +11,7 @@ public class ClosableHashSet<E> extends HashSet<E> {
 	
 	public static <E> ClosableHashSet<E> of(E[] initialObjects) {
 		final ClosableHashSet<E> set = new ClosableHashSet<>();
-		for (final E e : initialObjects)
-			set.add(e);
+		set.addAll(Arrays.asList(initialObjects));
 		return set;
 	}
 	
@@ -19,12 +19,12 @@ public class ClosableHashSet<E> extends HashSet<E> {
 	
 	@Override
 	public boolean add(E e) {
-		return isClosed ? false : super.add(e);
+		return !isClosed && super.add(e);
 	}
 	
 	@Override
 	public boolean addAll(Collection<? extends E> c) {
-		return isClosed ? false : super.addAll(c);
+		return !isClosed && super.addAll(c);
 	}
 	
 	public boolean addAll(E... elements) {
@@ -46,7 +46,7 @@ public class ClosableHashSet<E> extends HashSet<E> {
 		isClosed = true;
 		return this;
 	}
-	
+
 	public void disposeElements() {
 		if (isClosed)
 			super.clear();
@@ -65,22 +65,22 @@ public class ClosableHashSet<E> extends HashSet<E> {
 	
 	@Override
 	public boolean remove(Object o) {
-		return isClosed ? false : super.remove(o);
+		return !isClosed && super.remove(o);
 	}
 	
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		return isClosed ? false : super.removeAll(c);
+		return !isClosed && super.removeAll(c);
 	}
 
 	@Override
 	public boolean removeIf(Predicate<? super E> filter) {
-		return isClosed ? false : super.removeIf(filter);
+		return !isClosed && super.removeIf(filter);
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		return isClosed ? false : super.retainAll(c);
+		return !isClosed && super.retainAll(c);
 	}
 
 }

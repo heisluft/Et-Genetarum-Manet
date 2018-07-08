@@ -33,7 +33,6 @@ public class ClientRegistry {
 		for (final Block b : Registry.BLOCKS_TO_REGISTER)
 			if (b instanceof ISpecialSnowflake)
 				((ISpecialSnowflake) b).registerRendering();
-
 		for (final Entry<ItemStack, ModelResourceLocation> entry : MODELS_TO_REGISTER.entrySet())
 			ModelLoader.setCustomModelResourceLocation(entry.getKey().getItem(), entry.getKey().getItemDamage(),
 					entry.getValue());
