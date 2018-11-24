@@ -15,8 +15,7 @@ version = '0.0.1'
 group = "de.heisluft"
 archivesBaseName = name + mcversion
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = targetCompatibility = 1.8
 
 minecraft {
     version = mcversion + "-" + forgeversion
@@ -30,10 +29,6 @@ repositories {
 }
 
 dependencies {
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev' adds buildcraft to the dev env
-    //provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfCompile 'com.mod-buildcraft:buildcraft:6.0.8:dev'
-    //deobfProvided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 	testCompile 'junit:junit:4.12'
 }
 
@@ -77,17 +72,7 @@ task sourcesJar(type: Jar) {
 	from sourceSets.api.allJava
 }
 
-task apiJar(type: Jar) {
-	classifier = 'api'
-	from sourceSets.api.output
-	// TODO: when FG bug is fixed, remove allJava from the api jar.
-	// https://github.com/MinecraftForge/ForgeGradle/issues/369
-	// Gradle should be able to pull them from the -sources jar.
-	from sourceSets.api.allJava
-}
-
 artifacts {
 	sourcesJar
 	javadocJar
-	apiJar
 }
